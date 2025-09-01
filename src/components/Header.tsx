@@ -21,7 +21,7 @@ export default function Header() {
             </span>
           </div>
           <h1 className="font-extrabold text-[50px] leading-[60px]">
-            All Great Offices.
+            All Great Offices
             <br />
             Grow Your Business.
           </h1>
