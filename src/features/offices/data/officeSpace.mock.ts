@@ -3,8 +3,8 @@ import { OfficeSpace } from "../types/officeSpace.types";
 export const officeSpaces: OfficeSpace[] = [
   {
     id: 1,
-    title: "Angga Park Central Master Silicon Valley Star Class",
-    slug: "angga-park-central-master-silicon-valley-star-class",
+    title: "GoWork Jakarta",
+    slug: "gowork",
     price: 18560000,
     duration: "20 days",
     location: "Jakarta Pusat",
@@ -19,8 +19,19 @@ export const officeSpaces: OfficeSpace[] = [
     about:
       "Whether you need quiet private space away from distractions or collaborate in person...",
     features: ["Global Event", "Privacy", "Free Move", "Extra Snacks", ""],
-    salesContacts: [],
-    isFullyBooked: false,
+    salesContacts: [
+      {
+        name: "Kresna1",
+        role: "Chied of Sales and Marketing",
+        photo: "/assets/images/photos/photo-1.png",
+      },
+      {
+        name: "Kresna2",
+        role: "Chied of Sales and Marketing",
+        photo: "/assets/images/photos/photo-1.png",
+      },
+    ],
+    isFullyBooked: true,
     connection: "",
   },
   {
@@ -46,7 +57,13 @@ export const officeSpaces: OfficeSpace[] = [
       "Free Coffee",
       "Parking",
     ],
-    salesContacts: [],
+    salesContacts: [
+      {
+        name: "Edbert",
+        role: "Project Sales Manager",
+        photo: "/assets/images/photos/photo-2.png",
+      },
+    ],
     isFullyBooked: false,
     connection: "",
   },
@@ -68,7 +85,23 @@ export const officeSpaces: OfficeSpace[] = [
     about:
       "Premium lounge for business professionals with top-notch amenities and services.",
     features: ["24/7 Access", "Conference Hall", "Catering", "Gym"],
-    salesContacts: [],
+    salesContacts: [
+      {
+        name: "Doffannoel1",
+        role: "Sales Manager",
+        photo: "/assets/images/photos/photo-3.png",
+      },
+      {
+        name: "Doffannoel2",
+        role: "Sales Manager",
+        photo: "/assets/images/photos/photo-3.png",
+      },
+      {
+        name: "Doffannoel3",
+        role: "Sales Manager",
+        photo: "/assets/images/photos/photo-3.png",
+      },
+    ],
     isFullyBooked: false,
     connection: "",
   },

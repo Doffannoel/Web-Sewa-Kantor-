@@ -4,6 +4,7 @@ import { officeSpaces } from "@/features/offices/data/officeSpace.mock";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import OfficeFeatures from "@/features/offices/components/OfficeFeatures";
+import SalesContactCard from "@/features/offices/components/SalesContactCard";
 type Props = {
   // di Next.js terbaru, params adalah Promise
   params: Promise<{ slug: string }>;
@@ -19,7 +20,7 @@ export default async function OfficeSpaceDetailPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <OfficeHeader />
+      <OfficeHeader image={office.image} images={office.images} />
       <section
         id="Details"
         className="relative flex max-w-[1130px] mx-auto gap-[30px] mb-20 z-10"
@@ -85,7 +86,7 @@ export default async function OfficeSpaceDetailPage({ params }: Props) {
           <p className="leading-[30px]">{office.about}</p>
           <hr className="border-[#F6F5FD]" />
           <h2 className="font-bold">You Get What You Need Most</h2>
-          <OfficeFeatures />
+          <OfficeFeatures features={office.features} />
           <hr className="border-[#F6F5FD]" />
           <div className="flex flex-col gap-[6px]">
             <h2 className="font-bold">Office Address</h2>
@@ -113,18 +114,42 @@ export default async function OfficeSpaceDetailPage({ params }: Props) {
         </div>
         <div className="w-[392px] flex flex-col shrink-0 gap-[30px]">
           <div className="flex flex-col rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[30px] bg-white">
-            <div>
-              <p className="font-extrabold text-[32px] leading-[48px] text-[#0D903A]">
-                Rp 18.540.000
-              </p>
-              <p className="font-semibold mt-1">For 20 days working</p>
-            </div>
+            {office.isFullyBooked ? (
+              <div>
+                <p className="font-bold text-xl leading-[30px]">
+                  Sorry. This office is{" "}
+                  <span className="text-[#FF2D2D]">fully booked</span> at this
+                  moment, try next time.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <p className="font-extrabold text-[32px] leading-[48px] text-[#0D903A]">
+                  Rp {office.price.toLocaleString("id")}
+                </p>
+                <p className="font-semibold mt-1">
+                  For {office.duration} days working
+                </p>
+              </div>
+            )}
             <hr className="border-[#F6F5FD]" />
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-3">
-                <img
+                <Image
                   src="/assets/images/icons/verify.svg"
-                  className="w-[30px] h-[30px]"
+                  alt="icon"
+                  width={30}
+                  height={30}
+                />
+                <p className="font-semibold leading-[28px]">
+                  Mendapatkan akses pembelajaran terbaru terkait dunia startup
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/assets/images/icons/verify.svg"
+                  width={30}
+                  height={30}
                   alt="icon"
                 />
                 <p className="font-semibold leading-[28px]">
@@ -132,20 +157,11 @@ export default async function OfficeSpaceDetailPage({ params }: Props) {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <img
+                <Image
                   src="/assets/images/icons/verify.svg"
-                  className="w-[30px] h-[30px]"
                   alt="icon"
-                />
-                <p className="font-semibold leading-[28px]">
-                  Mendapatkan akses pembelajaran terbaru terkait dunia startup
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <img
-                  src="/assets/images/icons/verify.svg"
-                  className="w-[30px] h-[30px]"
-                  alt="icon"
+                  width={30}
+                  height={30}
                 />
                 <p className="font-semibold leading-[28px]">
                   Mendapatkan akses pembelajaran terbaru terkait dunia startup
@@ -154,92 +170,39 @@ export default async function OfficeSpaceDetailPage({ params }: Props) {
             </div>
             <hr className="border-[#F6F5FD]" />
             <div className="flex flex-col gap-[14px]">
-              <a
-                href="booking.html"
-                className="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD]"
-              >
-                <img
-                  src="/assets/images/icons/slider-horizontal-white.svg"
-                  className="w-6 h-6"
-                  alt="icon"
-                />
-                <span>Book This Office</span>
-              </a>
-              <button className="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold">
-                <img
-                  src="/assets/images/icons/save-add.svg"
-                  className="w-6 h-6"
-                  alt="icon"
-                />
-                <span>Save for Later</span>
-              </button>
+              {office.isFullyBooked ? (
+                <button className="flex items-center justify-center w-full rounded-full border border-[#000929] p-[16px_26px] gap-3 bg-white font-semibold">
+                  <Image
+                    src="/assets/images/icons/save-add.svg"
+                    width={6}
+                    height={6}
+                    alt="icon"
+                  />
+                  <span>Save for Later</span>
+                </button>
+              ) : (
+                <a
+                  href="booking.html"
+                  className="flex items-center justify-center w-full rounded-full p-[16px_26px] gap-3 bg-[#0D903A] font-bold text-[#F7F7FD]"
+                >
+                  <Image
+                    width={6}
+                    height={6}
+                    src="/assets/images/icons/slider-horizontal-white.svg"
+                    className="w-6 h-6"
+                    alt="icon"
+                  />
+                  <span>Book This Office</span>
+                </a>
+              )}
             </div>
           </div>
           <div className="flex flex-col rounded-[20px] border border-[#E0DEF7] p-[30px] gap-[20px] bg-white">
             <h2 className="font-bold">Contact Our Sales</h2>
             <div className="flex flex-col gap-[30px]">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-4">
-                  <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
-                    <img
-                      src="/assets/images/photos/photo-1.png"
-                      className="w-full h-full object-cover"
-                      alt="photo"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-[2px]">
-                    <p className="font-bold">Masayoshi</p>
-                    <p className="text-sm leading-[21px]">Sales Manager</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <a href="#">
-                    <img
-                      src="/assets/images/icons/call-green.svg"
-                      className="w-10 h-10"
-                      alt="icon"
-                    />
-                  </a>
-                  <a href="#">
-                    <img
-                      src="/assets/images/icons/chat-green.svg"
-                      className="w-10 h-10"
-                      alt="icon"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-4">
-                  <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
-                    <img
-                      src="/assets/images/photos/photo-2.png"
-                      className="w-full h-full object-cover"
-                      alt="photo"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-[2px]">
-                    <p className="font-bold">Fuji Ovina</p>
-                    <p className="text-sm leading-[21px]">Sales Manager</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <a href="#">
-                    <img
-                      src="/assets/images/icons/call-green.svg"
-                      className="w-10 h-10"
-                      alt="icon"
-                    />
-                  </a>
-                  <a href="#">
-                    <img
-                      src="/assets/images/icons/chat-green.svg"
-                      className="w-10 h-10"
-                      alt="icon"
-                    />
-                  </a>
-                </div>
-              </div>
+              {office.salesContacts.map((contact, index) => (
+                <SalesContactCard key={index} contact={contact} />
+              ))}
             </div>
           </div>
         </div>
